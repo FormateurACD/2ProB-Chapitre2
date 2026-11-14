@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mission Plantes – Révision</title>
+<style>
+:root{--g1:#14532d;--g2:#22863a;--g3:#bbf7d0;--g4:#f0fdf4;--o:#f59e0b;--r:#dc2626}
+*{box-sizing:border-box;margin:0;-webkit-tap-highlight-color:transparent}
+body{font-family:system-ui,sans-serif;background:var(--g4);color:#1a2e1f;font-size:17px}
+header{background:var(--g1);color:#fff;padding:8px 12px;position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+header button{background:var(--g2);color:#fff;border:0;border-radius:12px;min-width:48px;min-height:44px;font-size:1.2rem}
+#sc{flex:1;font-weight:700;text-align:center}
+#pb{flex-basis:100%;height:10px;background:#0006;border-radius:9px;overflow:hidden}#pg{height:100%;width:0;background:var(--o);transition:width .5s}
+main{max-width:900px;margin:auto;padding:12px}
+h1{font-size:1.5rem;color:var(--g1);text-align:center;margin:8px 0}h2{font-size:1.25rem;color:var(--g1);text-align:center;margin:8px 0}h3{color:var(--g1);margin:16px 0 8px}
+.c{text-align:center;margin:8px 0}
+.btn{display:block;width:100%;min-height:56px;margin:10px 0;border:0;border-radius:16px;background:var(--g2);color:#fff;font-size:1.1rem;font-weight:700;cursor:pointer;box-shadow:0 4px 0 var(--g1)}
+.btn.alt{background:#fff;color:var(--g1);border:3px solid var(--g2);box-shadow:none}.btn:active{transform:translateY(2px)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px}
+.tile{min-height:120px;border:0;border-radius:18px;background:#fff;box-shadow:0 3px 8px #0002;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:8px;font-size:1rem;color:var(--g1);cursor:pointer;animation:pop .4s both}
+.tile:hover{transform:scale(1.04)}.ic{font-size:2.2rem}
+.card{background:#fff;border-radius:18px;padding:16px;box-shadow:0 3px 8px #0002;text-align:center;margin:10px 0;animation:pop .3s}.qq{font-size:1.2rem;font-weight:600}
+.pool{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;min-height:70px;margin:10px 0}
+.chip{background:#fff;border:3px solid var(--g2);border-radius:14px;padding:12px 14px;font-weight:700;min-height:48px;cursor:grab;user-select:none}
+.chip.sel{background:var(--g3);transform:scale(1.08)}.chip.big{font-size:1.8rem;padding:20px 30px;animation:pop .2s}
+.bins{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.bin{background:var(--g3);border:3px dashed var(--g2);border-radius:16px;min-height:110px;padding:8px;text-align:center;cursor:pointer;color:var(--g1)}
+.bin.good{background:#86efac}.bin.bad,.bad{animation:sk .4s;border-color:var(--r)!important}
+.mini{display:inline-block;background:#fff;border-radius:10px;padding:4px 8px;margin:3px;font-size:.9rem}
+.bar{height:12px;background:#d1fae5;border-radius:9px;overflow:hidden;margin:8px 0}.bar i{display:block;height:100%;width:100%;background:var(--o)}
+.grid4{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}@media(min-width:600px){.grid4{grid-template-columns:repeat(4,1fr)}}
+.mc{min-height:84px;border:0;border-radius:14px;background:var(--g2);color:#fff;font-size:.95rem;font-weight:700;padding:6px;cursor:pointer}
+.mc .b{display:none}.mc.on{background:#fff;color:var(--g1);border:3px solid var(--o)}.mc.on .b{display:block}.mc.on .f{display:none}.mc.ok{background:#86efac;border-color:var(--g2)}.mc .f{font-size:1.8rem}
+input,select{width:100%;min-height:52px;border:3px solid var(--g2);border-radius:14px;font-size:1.1rem;padding:8px;margin:8px 0;background:#fff}
+select{width:auto;min-height:44px;margin:2px}select.lg{border-color:#16a34a;background:#dcfce7}select.lr{border-color:var(--r);background:#fee2e2}
+.txt{line-height:2.6;font-size:1.1rem;text-align:left}
+.opts{display:grid;gap:10px;margin:10px 0}.opt{min-height:60px;border:3px solid var(--g2);border-radius:14px;background:#fff;font-size:1.05rem;font-weight:600;padding:8px;cursor:pointer;color:var(--g1)}
+.opt.sel{background:var(--g3)}.opt.good{background:#86efac}.opt.bad{background:#fee2e2}
+.lw{position:relative;display:flex;justify-content:space-between;margin:10px 0}.col{display:flex;flex-direction:column;gap:12px;width:42%}
+.lk,.rk{min-height:56px;border:3px solid var(--g2);border-radius:14px;background:#fff;font-size:1rem;font-weight:700;color:var(--g1);cursor:pointer}.lk.sel{background:var(--g3);transform:scale(1.05)}
+#sv{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}line{stroke:var(--o);stroke-width:4;stroke-linecap:round}line.lg{stroke:#16a34a}line.lr{stroke:var(--r)}
+.fc{perspective:900px;height:230px;margin:10px 0;cursor:pointer}.fi{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}.fc.flip .fi{transform:rotateY(180deg)}
+.ff,.fb2{position:absolute;inset:0;backface-visibility:hidden;border-radius:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:14px;font-size:1.6rem;font-weight:700;box-shadow:0 3px 8px #0003}
+.ff{background:#fff;color:var(--g1)}.ff small,.fb2 small{font-size:.9rem;font-weight:400;margin-top:8px}.fb2{background:var(--g1);color:#fff;transform:rotateY(180deg)}
+.locks{display:flex;justify-content:center;gap:12px;font-size:2rem}
+.stars{font-size:2.4rem}.big{font-size:2rem;font-weight:800;color:var(--g2)}.pop{animation:pop .5s;font-weight:700;margin:6px}
+.kp{display:grid;grid-template-columns:1fr 1fr;gap:10px}.kp div{background:#fff;border-radius:14px;padding:10px;text-align:center;box-shadow:0 2px 6px #0002}.kp b{display:block;font-size:1.6rem;color:var(--g2)}
+.bds{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px}.bdg{background:#fff;border-radius:14px;padding:10px;text-align:center}.bdg span{font-size:2rem;display:block}.bdg.off{opacity:.3;filter:grayscale(1)}.bdg small{display:block}
+table{width:100%;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden;margin-bottom:12px}td,th{padding:8px;text-align:center;border-bottom:1px solid var(--g3)}th{background:var(--g1);color:#fff}
+@keyframes pop{from{transform:scale(.7);opacity:0}to{transform:scale(1);opacity:1}}
+@keyframes sk{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+@keyframes shr{to{width:0}}
+</style></head><body>
+<header><button onclick="menu()" aria-label="Accueil">🏠</button><span id="sc"></span><button onclick="stats()" aria-label="Suivi">📊</button><div id="pb"><div id="pg"></div></div></header>
+<main id="app"></main>
+<script>
+const $=s=>document.querySelector(s),sh=a=>[...a].sort(()=>Math.random()-.5),app=$('#app');
+const FN={P:'Poacées',F:'Fabacées',B:'Brassicacées',A:'Autres'},GN={mono:'Monocotylédones',di:'Dicotylédones'};
+const P='Blé|P|🌾;Orge|P|🌾;Maïs|P|🌽;Ray-grass|P|🌱;Dactyle|P|🌿;Fétuque|P|🌿;Sorgho|P|🌾;Avoine|P|🌾;Seigle|P|🌾;Triticale|P|🌾;Moha|P|🌾;Colza|B|🌼;Radis|B|🌱;Moutarde|B|🌼;Choux|B|🥬;Pois|F|🫛;Féverole|F|🫘;Fève|F|🫘;Haricot|F|🫘;Lupin|F|🌸;Luzerne|F|🍀;Trèfle|F|☘️;Sainfoin|F|🌸;Lotier|F|🌼;Vesce|F|🌿;Lentille|F|🫘;Betterave|A|🍠;Rumex|A|🍃'.split(';').map(s=>{let[n,f,e]=s.split('|');return{n,f,e,g:f=='P'?'mono':'di'}});
+const IF={P:'Céréale ou fourrage',B:'Graines en gousses : huile, fourrage',F:'Fixe l\'azote, riche en protéines',A:'Autre famille'},IO={'Ray-grass':'RGA : pâturage · RGI : fauche',Dactyle:'Résiste à la sécheresse',Fétuque:'Résiste à l\'humidité',Rumex:'Adventice des prairies',Betterave:'Culture de rotation'};
+const INT=p=>IO[p.n]||IF[p.f];
+const pk=o=>sh(Object.entries(o).flatMap(([f,n])=>sh(P.filter(p=>p.f==f)).slice(0,n)));
+const nm=s=>s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9 ]/g,'').trim().replace(/s$/,'');
+let S={pts:0,best:{},stars:{},tries:{},ok:0,tot:0},SB=0,TM=[];
+try{Object.assign(S,JSON.parse(localStorage.getItem('fpl1')||'{}'))}catch(e){}
+const save=()=>{try{localStorage.setItem('fpl1',JSON.stringify(S))}catch(e){}};
+const stage=h=>{TM.forEach(x=>{clearTimeout(x);clearInterval(x)});TM=[];app.innerHTML=h;scrollTo(0,0);window.onresize=null};
+const tm=(f,t)=>{let x=setTimeout(f,t);TM.push(x)},iv=(f,t)=>{TM.push(setInterval(f,t))};
+const LV=[[0,'🌱','Graine'],[80,'🌿','Pousse'],[200,'🌾','Tige'],[400,'🌻','Fleur'],[700,'🚜','Agriculteur'],[1000,'🏆','Expert']];
+const lvl=()=>{let i=0;LV.forEach((l,j)=>S.pts>=l[0]&&(i=j));return i};
+const done=()=>Object.keys(S.tries).filter(k=>S.tries[k]>0).length;
+const bd=()=>[['🌱','Première plante','1 activité faite',done()>=1],['⭐','Trois étoiles','3 ⭐ sur une activité',Object.values(S.stars).some(x=>x==3)],['🧠','Mémoire d\'or','Memory 3 et 4 faits',S.tries[3]&&S.tries[4]],['⚡','Éclair','10 bonnes en 30 s',(S.best[7]||0)>=50],['🔓','Évadé','Escape Game fini',S.tries[12]],['🏆','Trophée Expert','12 activités faites',done()>=12],['🥇','Champion','12 activités à 2⭐+',done()>=12&&Object.values(S.stars).filter(x=>x>=2).length>=12]].map(b=>[b[0],b[1],b[2],!!b[3]]);
+const head=()=>{$('#sc').textContent=`⭐ ${S.pts} · ${LV[lvl()][1]} ${LV[lvl()][2]} · ${done()}/12`;$('#pg').style.width=done()/12*100+'%'};
+const A=[['1','🌾','Mono ou Di ?'],['2','🧺','Les familles'],['3','🃏','Memory plantes'],['4','🧩','Memory indices'],['5','✏️','Texte à trous'],['6','⏱️','Vrai / Faux'],['7','⚡','Défi 30 s'],['8','🕵️','Qui suis-je ?'],['9','🔗','Relier'],['10','🔄','Cartes'],['11','🚜','Conseiller agricole'],['12','🔐','Escape Game']];
+function menu(){stage(`<h1>🌿 Les familles de plantes</h1><p class=c>Choisis une mission !</p><div class=grid>${A.map(a=>`<button class=tile onclick="run('${a[0]}')"><span class=ic>${a[1]}</span><b>${a[2]}</b><small>${'⭐'.repeat(S.stars[a[0]]||0)||'—'}</small></button>`).join('')}</div>`)}
+function end(id,pts,ok,tot){pts=Math.max(0,Math.round(pts));let pc=tot?Math.round(100*ok/tot):0,st=pc>=90?3:pc>=60?2:pc>=30?1:0,ol=lvl(),nb=bd().filter(b=>b[3]).length;
+S.pts+=pts;S.tries[id]=(S.tries[id]||0)+1;S.best[id]=Math.max(S.best[id]||0,pts);S.stars[id]=Math.max(S.stars[id]||0,st);S.ok+=ok;S.tot+=tot;SB=Math.max(SB,pts);save();head();
+stage(`<div class=card><h2>${pc>=60?'🎉 Bravo !':'💪 Courage !'}</h2><div class=stars>${'⭐'.repeat(st)}${'☆'.repeat(3-st)}</div><p class=big>+${pts} pts</p><p>Réussite : ${pc}%</p>${lvl()>ol?`<p class=pop>🌟 Niveau ${LV[lvl()][1]} ${LV[lvl()][2]} !</p>`:''}${bd().filter(b=>b[3]).length>nb?'<p class=pop>🏅 Nouveau badge !</p>':''}<button class=btn onclick="run('${id}')">🔄 Rejouer</button><button class="btn alt" onclick=menu()>🏠 Menu</button></div>`)}
+/* 1,2,7 : classer */
+function sort(id,ti,items,bins,key,sp){let pool=sh(items.map((_,i)=>i)),ok=0,er=0,cur=null,tl=30;
+stage(`<h2>${ti}</h2>${sp?'<div class=bar><i id=tb></i></div>':''}<div id=pool class=pool></div><div class=bins>${bins.map(b=>`<div class=bin data-k=${b[0]}><b>${b[1]}</b><div class=in></div></div>`).join('')}</div><p class=c>${sp?'':'👆 Touche une plante puis son groupe (ou glisse-la)'}</p>`);
+const pl=$('#pool'),nmI=i=>items[i].e+' '+items[i].n;
+const show=()=>{pl.innerHTML=sp?(pool.length?`<div class="chip big">${nmI(pool[0])}</div>`:''):pool.map(i=>`<div class=chip draggable=true data-i=${i}>${nmI(i)}</div>`).join('');cur=sp?pool[0]:null;if(!sp)pl.querySelectorAll('.chip').forEach(c=>{c.onclick=()=>{cur=+c.dataset.i;pl.querySelectorAll('.chip').forEach(x=>x.classList.toggle('sel',x==c))};c.ondragstart=e=>{cur=+c.dataset.i;e.dataTransfer.setData('t','x')}})};
+const place=(k,bin)=>{if(cur==null)return;let i=cur;if(key(items[i])==k){ok++;pool=pool.filter(x=>x!=i);bin.querySelector('.in').insertAdjacentHTML('beforeend',`<span class=mini>${nmI(i)}</span>`);bin.classList.add('good');tm(()=>bin.classList.remove('good'),300);if(sp&&!pool.length)pool=sh(items.map((_,j)=>j));show();if(!sp&&!pool.length)tm(()=>end(id,ok*10-er*4,ok,ok+er),600)}else{er++;bin.classList.add('bad');tm(()=>bin.classList.remove('bad'),400)}};
+app.querySelectorAll('.bin').forEach(b=>{b.onclick=()=>place(b.dataset.k,b);b.ondragover=e=>e.preventDefault();b.ondrop=e=>{e.preventDefault();place(b.dataset.k,b)}});
+show();if(sp)iv(()=>{tl-=.1;$('#tb').style.width=tl/30*100+'%';if(tl<=0)end(id,ok*5-er*2,ok,ok+er)},100)}
+/* 3,4 : memory */
+function mem(id,ti,cards){let c=sh(cards),op=[],ok=0,er=0,lk=0;
+stage(`<h2>${ti}</h2><div class=grid4>${c.map((x,i)=>`<button class=mc data-i=${i}><span class=f>❓</span><span class=b>${x.t}</span></button>`).join('')}</div>`);
+app.querySelectorAll('.mc').forEach(b=>b.onclick=()=>{if(lk||b.classList.contains('on'))return;b.classList.add('on');op.push(b);if(op.length<2)return;let[x,y]=op,a=c[x.dataset.i],d=c[y.dataset.i];op=[];
+if(a.k==d.k&&a.s!=d.s){ok++;x.classList.add('ok');y.classList.add('ok');if(ok==cards.length/2)tm(()=>end(id,ok*15-er*3,ok,ok+er),700)}else{er++;lk=1;tm(()=>{x.classList.remove('on');y.classList.remove('on');lk=0},900)}})}
+const MC=['1 cotylédon','Nervures parallèles','Racines fasciculées'],DC=['2 cotylédons','Nervures ramifiées','Racine pivotante'];
+/* 5 : texte à trous */
+function gaps(){let W=['rotation','parcelle','assolement','exploitation','longues','maladies','adventices'],O=sh([...W,'courtes','récoltes','semences']),er=0;
+let T=`Une [0] est l'alternance des cultures sur une même [1]. L'[2] est l'ensemble des cultures de l'[3]. Les rotations [4] limitent les [5] et les [6].`.replace(/\[(\d)\]/g,(m,n)=>`<select data-n=${n}><option value="">…</option>${O.map(o=>`<option>${o}</option>`).join('')}</select>`);
+stage(`<h2>Complète le texte</h2><div class="card txt">${T}</div><button class=btn id=vl>✔️ Valider</button><p id=fb class=c></p>`);
+$('#vl').onclick=()=>{let ok=0;app.querySelectorAll('select').forEach(s=>{let g=s.value==W[s.dataset.n];s.className=g?'lg':'lr';ok+=g});er+=7-ok;if(ok==7)tm(()=>end('5',70-er*3,7,7+er),700);else $('#fb').textContent=`${ok}/7 — corrige les cases rouges !`}}
+/* 6 : vrai faux */
+const V=[["Les monocotylédones ont 1 seul cotylédon.",1],["Les dicotylédones ont des racines fasciculées.",0,"Elles ont une racine pivotante."],["Le blé est une dicotylédone.",0,"C'est une monocotylédone (poacée)."],["Les fabacées fixent l'azote de l'air.",1],["Le fruit des fabacées est une gousse.",1],["Les rotations longues limitent maladies et adventices.",1],["L'assolement est l'alternance des cultures sur une parcelle.",0,"C'est la rotation ! Assolement = toutes les cultures de l'exploitation."],["Le colza est une brassicacée.",1],["Les nervures des monocotylédones sont parallèles.",1],["Le dactyle résiste à l'humidité.",0,"Il résiste à la sécheresse (la fétuque : l'humidité)."],["Le RGI est surtout utilisé pour la fauche.",1],["Le maïs est une fabacée.",0,"C'est une poacée."],["La luzerne enrichit le sol en azote.",1],["Les graminées sont des dicotylédones.",0,"Ce sont des monocotylédones."]];
+function vf(){let Q=sh(V).slice(0,10),i=0,ok=0;
+const q=()=>{if(i>=10)return end('6',ok*10,ok,10);let[t,a,w]=Q[i],d=0;stage(`<p class=c>Question ${i+1}/10 · ✅ ${ok}</p><div class=bar><i id=tb style="animation:shr 10s linear forwards"></i></div><div class="card qq">${t}</div><div class=two><button class=btn id=v>✅ Vrai</button><button class="btn alt" id=f>❌ Faux</button></div><p id=fb class=c></p>`);
+const ans=r=>{if(d)return;d=1;let g=r===a;if(g)ok++;$('#fb').textContent=(r===null?'⏰ Trop lent ! ':g?'🎉 Bien joué ! ':'❌ Raté. ')+(w||'');tm(()=>{i++;q()},g?700:2200)};
+$('#v').onclick=()=>ans(1);$('#f').onclick=()=>ans(0);tm(()=>ans(null),10000)};q()}
+/* 8 : qui suis-je */
+const R=[["Je possède des nervures parallèles et des racines fasciculées. Quel groupe suis-je ?",['monocotylédones','mono']],["Je fixe l'azote de l'air grâce aux bactéries de mes racines. Quelle famille ?",['fabacées','légumineuses']],["Je suis une graminée résistante à la sécheresse.",['dactyle']],["Je suis une graminée résistante à l'humidité.",['fétuque']],["Je suis l'ensemble des cultures de l'exploitation.",['assolement']],["Je suis l'alternance des cultures sur une même parcelle.",['rotation']],["J'ai 2 cotylédons, des nervures ramifiées et une racine pivotante. Quel groupe ?",['dicotylédones','di']],["Je suis un ray-grass destiné à la fauche. Mon sigle ?",['RGI','ray grass italien','raygrass italien']]];
+function who(){let Q=sh(R).slice(0,6),i=0,ok=0,er=0,pt=0;
+const q=()=>{if(i>=6)return end('8',pt,ok,ok+er);let[t,a]=Q[i],h=0,e=0;stage(`<p class=c>Énigme ${i+1}/6</p><div class="card qq">🕵️ ${t}</div><input id=in autocomplete=off placeholder="Ta réponse…"><div class=two><button class=btn id=go>Valider</button><button class="btn alt" id=hi>💡 Indice</button></div><p id=fb class=c></p>`);
+const go=()=>{let v=nm($('#in').value);if(!v)return;if(a.map(nm).includes(v)){ok++;pt+=h?10:20;$('#fb').textContent='✅ Bravo !';i++;tm(q,800)}else{er++;e++;$('#in').classList.add('bad');tm(()=>$('#in').classList.remove('bad'),400);if(e>=3){$('#fb').textContent='👉 '+a[0];i++;tm(q,2000)}else $('#fb').textContent='❌ Pas tout à fait…'}};
+$('#go').onclick=go;$('#in').onkeydown=x=>x.key=='Enter'&&go();$('#hi').onclick=()=>{h=1;$('#fb').textContent=`Commence par « ${a[0][0].toUpperCase()} » · ${a[0].length} lettres`}};q()}
+/* 9 : relier */
+function link(){let L=pk({P:2,F:2,B:1,A:1}),m={},sel=null,er=0,chk=0;
+stage(`<h2>Relie chaque plante à sa famille</h2><div id=lw class=lw><svg id=sv></svg><div class=col>${L.map((p,i)=>`<button class=lk data-i=${i}>${p.e} ${p.n}</button>`).join('')}</div><div class=col>${Object.keys(FN).map(f=>`<button class=rk data-f=${f}>${FN[f]}</button>`).join('')}</div></div><button class=btn id=vl>✔️ Valider</button><p id=fb class=c></p>`);
+const ls=[...app.querySelectorAll('.lk')],rs={};app.querySelectorAll('.rk').forEach(b=>rs[b.dataset.f]=b);
+const dr=()=>{let w=$('#lw').getBoundingClientRect(),s='';for(let i in m){let a=ls[i].getBoundingClientRect(),b=rs[m[i]].getBoundingClientRect();s+=`<line x1="${a.right-w.left}" y1="${a.top+a.height/2-w.top}" x2="${b.left-w.left}" y2="${b.top+b.height/2-w.top}" class="${chk?(L[i].f==m[i]?'lg':'lr'):''}"/>`}$('#sv').innerHTML=s};
+window.onresize=dr;
+ls.forEach(b=>b.onclick=()=>{sel=+b.dataset.i;ls.forEach(x=>x.classList.toggle('sel',x==b))});
+Object.entries(rs).forEach(([f,b])=>b.onclick=()=>{if(sel==null)return;m[sel]=f;sel=null;chk=0;ls.forEach(x=>x.classList.remove('sel'));dr()});
+$('#vl').onclick=()=>{if(Object.keys(m).length<6){$('#fb').textContent='Relie toutes les plantes !';return}chk=1;let ok=Object.keys(m).filter(i=>L[i].f==m[i]).length;er+=6-ok;dr();if(ok==6)tm(()=>end('9',60-er*4,6,6+er),900);else $('#fb').textContent=`${ok}/6 — corrige les traits rouges !`}}
+/* 10 : cartes */
+function flash(){let D=sh(P).slice(0,10),i=0,ok=0;
+const q=()=>{if(i>=10)return end('10',ok*10,ok,10);let p=D[i];stage(`<p class=c>Carte ${i+1}/10 · Dis la famille à voix haute, puis retourne !</p><div class=fc id=fc><div class=fi><div class=ff>${p.e}<br>${p.n}<small>👆 Touche pour retourner</small></div><div class=fb2><b>${FN[p.f]}</b>${GN[p.g]}<small>${INT(p)}</small></div></div></div><div class=two id=ch style=visibility:hidden><button class="btn alt" id=no>😅 À revoir</button><button class=btn id=yes>😎 Je savais</button></div>`);
+$('#fc').onclick=()=>{$('#fc').classList.add('flip');$('#ch').style.visibility='visible'};$('#yes').onclick=()=>{ok++;i++;q()};$('#no').onclick=()=>{i++;q()}};q()}
+/* 11 : conseiller */
+const C=[["Je cherche une plante pour enrichir mon sol en azote.","🍀 Luzerne","🌽 Maïs","🌼 Colza","Les fabacées fixent l'azote de l'air."],["Je veux une prairie à faucher.","🌱 RGI","🌱 RGA","🌾 Blé","Le RGI est destiné à la fauche."],["Mes vaches pâturent : quel ray-grass ?","🌱 RGA","🌱 RGI","🥬 Choux","Le RGA est adapté au pâturage."],["Ma parcelle est très sèche en été : quelle graminée ?","🌿 Dactyle","🌿 Fétuque","🫘 Lupin","Le dactyle résiste à la sécheresse."],["Ma parcelle est souvent humide : quelle graminée ?","🌿 Fétuque","🌿 Dactyle","🌼 Colza","La fétuque résiste à l'humidité."],["Je veux limiter maladies et mauvaises herbes.","⏳ Rotation longue","🔁 Même culture chaque année","🌾 Que du blé","Les rotations longues limitent maladies et adventices."],["Il me faut une plante riche en protéines pour mes animaux.","🫛 Pois","🌾 Orge","🍃 Rumex","Les fabacées sont riches en protéines."],["Je veux une brassicacée à gousses.","🌼 Colza","🌽 Maïs","🌾 Seigle","Le colza est une brassicacée."]];
+function adv(){let Q=sh(C).slice(0,6),i=0,ok=0,er=0;
+const q=()=>{if(i>=6)return end('11',ok*15-er*3,ok,ok+er);let[t,a,b,c,x]=Q[i],w=0;stage(`<p class=c>Client ${i+1}/6</p><div class="card qq">👩‍🌾 « ${t} »</div><div class=opts>${sh([a,b,c]).map(o=>`<button class=opt data-o="${o}">${o}</button>`).join('')}</div><p id=fb class=c></p>`);
+app.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{if(b.dataset.o==a){b.classList.add('good');if(!w)ok++;$('#fb').textContent='✅ '+x;i++;tm(q,1600)}else{w=1;er++;b.classList.add('bad');b.disabled=true}})};q()}
+/* 12 : escape game */
+const E=[{q:'🔒 Énigme 1 – Rotation : « Alternance des cultures sur une même parcelle. » Tape le mot.',a:['rotation']},{q:'🔒 Énigme 2 – Monocotylédones : sélectionne TOUS les indices.',o:MC.concat(DC).sort((x,y)=>x.length-y.length).slice(0,0).concat(['1 cotylédon','2 cotylédons','Nervures parallèles','Nervures ramifiées','Racines fasciculées','Racine pivotante']),c:[0,2,4]},{q:'🔒 Énigme 3 – Sélectionne les plantes qui ne sont PAS des dicotylédones.',o:['Colza','Blé','Betterave','Orge','Radis','Maïs'],c:[1,3,5]},{q:'🔒 Énigme 4 – Pois, Lupin, Trèfle, Luzerne… Quelle famille ? Tape-la.',a:['fabacées','légumineuses']},{q:'🔒 Énigme 5 – Sélectionne les affirmations VRAIES.',o:['Les fabacées enrichissent le sol en azote','Le dactyle résiste à l\'humidité','Les rotations longues limitent maladies et adventices','Le RGI sert à la fauche','Le RGA sert au pâturage'],c:[0,2,3,4]}];
+function esc(){let s=0,er=0;
+const q=()=>{if(s>=5)return end('12',100-er*8,5,5+er);let e=E[s],sl=new Set();stage(`<div class=locks>${[0,1,2,3,4].map(i=>`<span>${i<s?'🔓':'🔒'}</span>`).join('')}</div><div class="card qq">${e.q}</div>${e.o?`<div class=opts>${e.o.map((o,i)=>`<button class=opt data-i=${i}>${o}</button>`).join('')}</div>`:'<input id=in autocomplete=off placeholder="Code secret…">'}<button class=btn id=go>🔑 Ouvrir</button><p id=fb class=c></p>`);
+app.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{let i=+b.dataset.i;sl.has(i)?sl.delete(i):sl.add(i);b.classList.toggle('sel')});
+$('#go').onclick=()=>{let g=e.o?[...sl].sort().join()==e.c.join():e.a.map(nm).includes(nm($('#in').value));if(g){s++;$('#fb').textContent='🔓 Cadenas ouvert !';tm(q,900)}else{er++;$('#fb').textContent='❌ Ça ne s\'ouvre pas… réessaie !';$('#go').classList.add('bad');tm(()=>$('#go').classList.remove('bad'),400)}}};q()}
+/* suivi */
+function stats(){stage(`<h2>📊 Mon suivi</h2><div class=kp><div><b>${S.pts}</b>points</div><div><b>${SB}</b>meilleur score (session)</div><div><b>${S.tot?Math.round(100*S.ok/S.tot):0}%</b>réussite</div><div><b>${done()}/12</b>activités faites</div></div><h3>🏅 Badges & trophées</h3><div class=bds>${bd().map(b=>`<div class="bdg ${b[3]?'':'off'}"><span>${b[0]}</span><b>${b[1]}</b><small>${b[2]}</small></div>`).join('')}</div><h3>🏆 Tableau des scores</h3><table><tr><th>Activité</th><th>Essais</th><th>Record</th><th>⭐</th></tr>${A.map(a=>`<tr><td>${a[1]} ${a[2]}</td><td>${S.tries[a[0]]||0}</td><td>${S.best[a[0]]||0}</td><td>${S.stars[a[0]]||0}/3</td></tr>`).join('')}</table><button class="btn alt" onclick=rst()>🗑️ Tout effacer</button>`)}
+function rst(){if(confirm('Effacer toute ta progression ?')){S={pts:0,best:{},stars:{},tries:{},ok:0,tot:0};SB=0;save();head();menu()}}
+const F={1:()=>sort('1','Glisse chaque plante dans son groupe',pk({P:5,F:3,B:2,A:2}),[['mono','🌾 Monocotylédones'],['di','🌼 Dicotylédones']],p=>p.g),
+2:()=>sort('2','Classe les plantes dans leur famille',pk({P:4,F:4,B:3,A:2}),[['F','🫘 Fabacées'],['P','🌾 Poacées'],['B','🌼 Brassicacées'],['A','🍃 Autres']],p=>p.f),
+3:()=>mem('3','Associe chaque plante à sa famille',pk({P:2,F:2,B:1,A:1}).flatMap(p=>[{t:p.e+' '+p.n,k:p.f,s:0},{t:FN[p.f],k:p.f,s:1}])),
+4:()=>mem('4','Associe chaque indice à son groupe',[...MC.map(t=>({t,k:'mono',s:0})),...DC.map(t=>({t,k:'di',s:0})),...MC.map(()=>({t:'Mono-cotylédones',k:'mono',s:1})),...DC.map(()=>({t:'Di-cotylédones',k:'di',s:1}))]),
+5:gaps,6:vf,7:()=>sort('7','⚡ 30 secondes : classe un max de plantes !',P,[['mono','🌾 Mono'],['di','🌼 Di']],p=>p.g,1),8:who,9:link,10:flash,11:adv,12:esc};
+const run=id=>F[id]();
+head();menu();
+</script></body></html>
