@@ -50,7 +50,7 @@ table{width:100%;border-collapse:collapse;background:#fff;border-radius:12px;ove
 @keyframes sk{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
 @keyframes shr{to{width:0}}
 </style></head><body>
-<header><button onclick="menu()" aria-label="Accueil">🏠</button><span id="sc"></span><button onclick="stats()" aria-label="Suivi">📊</button><div id="pb"><div id="pg"></div></div></header>
+<header><a href="https://formateuracd.github.io/Accueil/" style="display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:8px 12px;border-radius:12px;background:var(--g2);color:#fff;text-decoration:none;font-size:.95rem;font-weight:700">← Retour à l’accueil</a><button onclick="menu()" aria-label="Accueil">🏠</button><span id="sc"></span><button onclick="stats()" aria-label="Suivi">📊</button><div id="pb"><div id="pg"></div></div></header>
 <main id="app"></main>
 <script>
 const $=s=>document.querySelector(s),sh=a=>[...a].sort(()=>Math.random()-.5),app=$('#app');
